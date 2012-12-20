@@ -4,6 +4,9 @@ require 'bundler'
 Bundler.require(:default)
 
 require 'sinatra'
+require 'sinatra/config_file'
+config_file 'config/config.yml'
+
 require 'haml'
 require 'sass/plugin/rack'
 

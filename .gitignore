@@ -4,6 +4,7 @@
 .rspec
 /.idea
 /.bundle
+/config/config.yml
 /log/*
 /tmp/*
 /db/*.sqlite3

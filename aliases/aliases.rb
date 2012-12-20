@@ -2,11 +2,11 @@ require 'aliases/alias'
 require 'aliases/validation_error'
 
 class Aliases
-  def initialize
+  def initialize(aliases_location)
     @aliases = []
 
-    # Construct from /etc/aliases
-    afile = File.open('/etc/aliases', 'rb')
+    # Construct from aliases location (usually /etc/aliases)
+    afile = File.open(aliases_location, 'rb')
     aliases_contents = afile.read
     afile.close
 

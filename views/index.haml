@@ -13,7 +13,7 @@
             %p
               %span.name
                 =a.name
-              @unihallresclub.com
+              =@domain
             %span.remove
               &times;
           %td.arrow
@@ -25,7 +25,7 @@
                   -if d.class == Alias
                     %span.name
                       =d.name
-                    @unihallresclub.com
+                    =@domain
                   -else
                     %span.email
                       =d.name
@@ -41,7 +41,7 @@
                       -if b.name != a.name and not a.destinations.include? b
                         %option(val="#{b.name}")
                           =b.name
-                  @unihallresclub.com
+                  =@domain
                   alias
                 %span.add
                   &#43;
