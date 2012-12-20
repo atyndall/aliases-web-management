@@ -1,0 +1,84 @@
+// Base text stuff
+$default-font-family: Arial, Helvetica, sans-serif;
+$default-font-color: #464646;
+$default-font-size: 12px;
+$default-lineheight: 1.25;
+
+body {
+  font: {
+    family: $default-font-family;
+    size: $default-font-size;
+  }
+  color: $default-font-color;
+  line-height: $default-lineheight;
+}
+
+#management {
+  width: 100%;
+
+  p {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 0.5em;
+  }
+
+  td {
+    vertical-align: middle;
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
+
+  .alias {
+    text-align: right;
+  }
+
+  .name {
+    font-style: italic;
+  }
+
+  .arrow {
+    text-align: center;
+    font-weight: bold;
+    font-size: 200%;
+  }
+
+  .to ul, .to ul li {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+
+  .to ul li {
+    padding-bottom: 0.5em;
+  }
+
+  .new {
+    display: none;
+
+    select option {
+      font-style: italic;
+    }
+  }
+}
+
+.add, .remove {
+  font-size: 16pt;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.add {
+  color: green;
+}
+
+.add:hover {
+  color: lightgreen;
+}
+
+.remove {
+  color: red;
+}
+
+.remove:hover {
+  color: pink;
+}

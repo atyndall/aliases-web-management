@@ -2,6 +2,53 @@
   %head
     %title Email Alias Management
     %link(rel='stylesheet' href='/stylesheets/main.css')
+    %script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
     %script(src='/javascripts/main.js')
   %body
     %h1 Email Alias Management
+    %table#management
+      -@aliases.each do |a|
+        %tr
+          %td.alias
+            %p
+              %span.name
+                =a.name
+              @unihallresclub.com
+            %span.remove
+              &times;
+          %td.arrow
+            &rarr;
+          %td.to
+            %ul
+              -a.destinations.each do |d|
+                %li
+                  -if d.class == Alias
+                    %span.name
+                      =d.name
+                    @unihallresclub.com
+                  -else
+                    %span.email
+                      =d.name
+                  %span.remove
+                    &nbsp;&times;
+              %li
+                %p.new
+                  %input(type='text' placeholder='External Email')
+                  or
+                  %select
+                    %option(val='')
+                    -@aliases.each do |b|
+                      -if b.name != a.name and not a.destinations.include? b
+                        %option(val="#{b.name}")
+                          =b.name
+                  @unihallresclub.com
+                  alias
+                %span.add
+                  &#43;
+      %tr
+        %td.alias
+          %span.add
+            &#43;
+        %td.arrow
+          &rarr;
+        %td.to
