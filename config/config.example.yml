@@ -1,5 +1,5 @@
 # Aliases file location
-aliases_locaton: /etc/aliases
+aliases_location: /etc/aliases
 
 # Domain used for emails send to the mailer associated with the /etc/aliases file
 # i.e. if your host accepts mail to @example.com, then write example.com here

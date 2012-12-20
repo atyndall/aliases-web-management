@@ -61,17 +61,19 @@ body {
   }
 }
 
-.add, .remove {
+.add, .remove, .save {
   font-size: 16pt;
   cursor: pointer;
   font-weight: bold;
+  padding-left: 0.2em;
+  padding-right: 0.2em;
 }
 
-.add {
+.add, .save {
   color: green;
 }
 
-.add:hover {
+.add:hover, .save:hover {
   color: lightgreen;
 }
 
@@ -81,4 +83,22 @@ body {
 
 .remove:hover {
   color: pink;
+}
+
+#saveall {
+  text-align: center;
+}
+
+.newalias {
+  input {
+    text-align: right;
+  }
+}
+
+.template {
+  display: none;
+}
+
+.unsaved {
+  color: orange;
 }

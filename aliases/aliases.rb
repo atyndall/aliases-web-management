@@ -1,5 +1,6 @@
 require 'aliases/alias'
 require 'aliases/validation_error'
+require 'json'
 
 class Aliases
   def initialize(aliases_location)
@@ -78,5 +79,23 @@ class Aliases
   def each(&blk)
     @aliases.sort! { |a, b| a.name.downcase <=> b.name.downcase }
     @aliases.each(&blk)
+  end
+
+  public
+  def to_json
+    obj = {}
+    @aliases.each do |a|
+      dlist = []
+      a.destinations.each do |d|
+        dlist << d.name
+      end
+      obj[a] = dlist
+    end
+    obj.to_json
+  end
+
+  public
+  def self.from_json
+
   end
 end

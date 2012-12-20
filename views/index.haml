@@ -3,6 +3,8 @@
     %title Email Alias Management
     %link(rel='stylesheet' href='/stylesheets/main.css')
     %script(src='//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js')
+    :javascript
+      window.domain = "#{@domain}"
     %script(src='/javascripts/main.js')
   %body
     %h1 Email Alias Management
@@ -14,14 +16,14 @@
               %span.name
                 =a.name
               =@domain
-            %span.remove
+            %span.remove(aliases-type='alias' aliases-alias="#{a.name}" style='display:none;')
               &times;
           %td.arrow
             &rarr;
           %td.to
             %ul
               -a.destinations.each do |d|
-                %li
+                %li(aliases-destination="#{d.name}")
                   -if d.class == Alias
                     %span.name
                       =d.name
@@ -29,26 +31,58 @@
                   -else
                     %span.email
                       =d.name
-                  %span.remove
-                    &nbsp;&times;
-              %li
-                %p.new
-                  %input(type='text' placeholder='External Email')
-                  or
-                  %select
-                    %option(val='')
-                    -@aliases.each do |b|
-                      -if b.name != a.name and not a.destinations.include? b
-                        %option(val="#{b.name}")
-                          =b.name
-                  =@domain
-                  alias
-                %span.add
-                  &#43;
+                  %span.remove(aliases-type='destination' aliases-alias="#{a.name}" aliases-destination="#{d.name}" style='display:none;')
+                    &times;
+              %li.new
+                %input(type='email' pattern='[^ @]+@[^ @]+' placeholder='External Email')
+                or
+                %select
+                  %option(value='')
+                    Internal Email
+                  %option(value='')
+                  -@aliases.each do |b|
+                    -if b.name != a.name and not a.destinations.include? b
+                      %option(value="#{b.name}")
+                        ="#{b.name} #{@domain}"
+                %span.remove(aliases-type='unsaved-dest' style='display:none;')
+                  &times;
+                %span.save(aliases-type='destination' aliases-alias="#{a.name}" style='display:none;')
+                  &#10004;
+            %span.add(aliases-type='destination' aliases-alias="#{a.name}" style='display:none;')
+              &#43;
+      %tr.template
+        %td
+        %td
+        %td
+          %ul
+            %li.unsaved#dest-alias-template
+              %span.name
+              =@domain
+              %span.remove(aliases-type='destination')
+                &times;
+            %li.unsaved#dest-email-template
+              %span.email
+              %span.remove(aliases-type='destination')
+                &times;
+      %tr#atemplate.newalias.unsaved.template
+        %td.alias
+          %p
+            %input(type='text' pattern='[a-zA-Z0-9]*' placeholder='Alias Name')
+            =@domain
+          %span.remove(aliases-type='unsaved-alias' style='display:none;')
+            &times;
+          %span.save(aliases-type='alias' style='display:none;')
+            &#10004;
+        %td.arrow
+          &rarr;
+        %td.to
       %tr
         %td.alias
-          %span.add
+          %span.add(aliases-type='alias' style='display:none;')
             &#43;
         %td.arrow
           &rarr;
         %td.to
+    %p#saveall
+      %button(type='button' disabled)
+        Save Modifications

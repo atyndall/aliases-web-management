@@ -16,7 +16,7 @@ class Alias < Destination
 
   def add_destination(dobj)
     if dobj.class < Destination
-      if not @destinations.include? dobj
+      if not @destinations.include? dobj and dobj.name != self.name
         @destinations << dobj
       end
     elsif

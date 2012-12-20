@@ -5,7 +5,7 @@ Bundler.require(:default)
 
 require 'sinatra'
 require 'sinatra/config_file'
-config_file 'config/config.yml'
+config_file File.dirname(__FILE__) + '/config/config.yml'
 
 require 'haml'
 require 'sass/plugin/rack'
