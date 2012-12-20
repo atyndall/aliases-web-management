@@ -7,7 +7,9 @@ require 'sinatra'
 require 'haml'
 require 'sass/plugin/rack'
 
-require './app'
+$:.unshift File.dirname(__FILE__) # Add current dir to load path
+
+require 'app'
 
 set :run, false
 set :raise_errors, true
