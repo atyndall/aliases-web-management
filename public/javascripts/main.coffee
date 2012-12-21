@@ -132,6 +132,9 @@ $(document).ready ->
 
 
   $('#saveall button').click ->
+    alert('Unimplemented!')
+    return;
+
     $(this).attr('disabled', 'disabled');
     $(this).text('Saving...')
 
@@ -143,8 +146,8 @@ $(document).ready ->
 
       success: (data) ->
         # if data == error
-        alert('Data saved')
-        window.location.reload(false)
+        # alert('Data saved')
+        # window.location.reload(false)
 
       error: (xhr, ajaxOptions, thrownError) ->
         window.alert('Something went wrong when saving alias information. Error: ' + thrownError);
