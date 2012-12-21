@@ -102,3 +102,7 @@ body {
 .unsaved {
   color: orange;
 }
+
+tr.newalias td.to {
+ display: none;
+}

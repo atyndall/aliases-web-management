@@ -27,7 +27,7 @@ $(document).ready ->
         n.children('.new').clone().removeClass('new').addClass('unsaved').appendTo(n)
       when 'alias'
         n = $('#atemplate')
-        n.clone().removeAttr('id').addClass('unsaved').insertAfter(n)
+        n.clone().removeAttr('id').removeClass('template').addClass('unsaved').insertAfter(n)
 
 
   $('#management').on 'click', 'span.remove',  ->
@@ -41,12 +41,13 @@ $(document).ready ->
       when 'unsaved-alias'
         $(this).closest('tr').remove()
       when 'destination'
-        if window.confirm('Are you sure you want to delete "' + dest + '" from "' + alias + '"?')
+        if confirm('Are you sure you want to delete "' + dest + '" from "' + alias + '"?')
+          window.aliases[alias].remove(dest)
           if /^[a-zA-Z0-9]+$/.test(dest)
             $(this).parent().siblings('li.new').children('select').append($('<option value="' + dest + '">' + dest + ' ' + window.domain + '</option>'))
           $(this).parent().remove()
       when 'alias'
-        if window.confirm('Are you sure you want to delete the "' + alias + '" alias? This will also delete any references to this list as a destination.')
+        if confirm('Are you sure you want to delete the "' + alias + '" alias? This will also delete any references to this list as a destination.')
           delete window.aliases[alias]
           for k, v of window.aliases
             v.remove(alias)
@@ -80,9 +81,12 @@ $(document).ready ->
         else if emval != ''
           email = new RegExp('^' + li.children('input').attr('pattern') + '$', 'g')
           domain = new RegExp('.*' + window.domain + '$', 'g')
+
           if email.test(emval)
             if domain.test(emval)
               alert('Please use the drop down menu instead of manually specifying an alias')
+            else if $.inArray(emval, window.aliases[alias]) > -1
+              alert('This email address is already a destination for this alias')
             else
               newe = $('#dest-email-template').clone().removeAttr('id').attr('aliases-destination', emval)
               newe.children('.email').text(emval)
@@ -97,9 +101,25 @@ $(document).ready ->
           alert('You need to enter details!')
 
         if newe and newv
+          window.aliases[alias].push newv
           li.after(newe)
           li.remove()
-          window.aliases[alias].push newv
+
+      when 'alias'
+        input = $(this).siblings('p').children('input')
+        alias = new RegExp('^' + input.attr('pattern') + '$', 'g')
+        if alias.test(input.val())
+          if window.aliases[input.val()] == undefined
+            window.aliases[input.val()] = []
+            $(this).closest('tr').removeClass('newalias')
+            $(this).closest('td').children('span.remove').attr('aliases-type', 'alias').attr('aliases-alias', input.val())
+            $(this).closest('tr').find('td.to span.save').attr('aliases-alias', input.val())
+            $(this).closest('td').children('span.save').remove()
+            input.replaceWith( $('<span id="name">' + input.val() + '</span>') )
+          else
+            alert('An alias with that name already exists')
+        else
+          alert('Alias must be alphanumeric only')
 
 
   $('#management').on 'input', '.unsaved input', ->

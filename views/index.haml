@@ -34,7 +34,7 @@
                   %span.remove(aliases-type='destination' aliases-alias="#{a.name}" aliases-destination="#{d.name}" style='display:none;')
                     &times;
               %li.new
-                %input(type='email' pattern='[^ @]+@[^ @]+' placeholder='External Email')
+                %input(type='email' pattern='[^ ,@]+@[^ ,@]+' placeholder='External Email')
                 or
                 %select
                   %option(value='')
@@ -67,15 +67,32 @@
       %tr#atemplate.newalias.unsaved.template
         %td.alias
           %p
-            %input(type='text' pattern='[a-zA-Z0-9]*' placeholder='Alias Name')
+            %input(type='text' pattern='[a-zA-Z0-9]+' placeholder='Alias Name')
             =@domain
-          %span.remove(aliases-type='unsaved-alias' style='display:none;')
+          %span.remove(aliases-type='unsaved-alias')
             &times;
-          %span.save(aliases-type='alias' style='display:none;')
+          %span.save(aliases-type='alias')
             &#10004;
         %td.arrow
           &rarr;
         %td.to
+          %ul
+            %li.new
+              %input(type='email' pattern='[^ ,@]+@[^ ,@]+' placeholder='External Email')
+              or
+              %select
+                %option(value='')
+                  Internal Email
+                %option(value='')
+                -@aliases.each do |b|
+                  %option(value="#{b.name}")
+                    ="#{b.name} #{@domain}"
+              %span.remove(aliases-type='unsaved-dest')
+                &times;
+              %span.save(aliases-type='destination')
+                &#10004;
+          %span.add(aliases-type='destination')
+            &#43;
       %tr
         %td.alias
           %span.add(aliases-type='alias' style='display:none;')
