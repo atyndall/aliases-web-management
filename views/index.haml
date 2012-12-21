@@ -8,7 +8,36 @@
     %script(src='/javascripts/main.js')
   %body
     %h1 Email Alias Management
+    %p
+      You can modify the different destination addresses that the email management system handles here.
+    %ul
+      %li
+        %span.remove
+          &times;
+        will remove an element.
+      %li
+        %span.add
+          &#43
+        will add a new element.
+      %li
+        %span.save
+          &#10004;
+        will save your changes to an element.
+    %p
+      If something appears in
+      %span(style='color:orange;')
+        orange
+      it means it is currently unsaved. Click the "Save Modificatons" button down the bottom to save your changes.
     %table#management
+      %thead
+        %tr
+          %td.alias
+            %p
+              When someone sends an email to:
+          %td.arrow
+          %td.to
+            %p
+              It is forwarded to:
       -@aliases.each do |a|
         %tr
           %td.alias

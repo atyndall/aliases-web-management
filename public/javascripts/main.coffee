@@ -53,6 +53,7 @@ $(document).ready ->
             v.remove(alias)
 
           $(this).closest('tr').remove()
+          $('#management td.to li.new select option[value="' + alias + '"]').remove()
           $('li[aliases-destination="' + alias + '"]').remove()
 
 
@@ -115,7 +116,8 @@ $(document).ready ->
             $(this).closest('td').children('span.remove').attr('aliases-type', 'alias').attr('aliases-alias', input.val())
             $(this).closest('tr').find('td.to span.save').attr('aliases-alias', input.val())
             $(this).closest('td').children('span.save').remove()
-            input.replaceWith( $('<span id="name">' + input.val() + '</span>') )
+            $('#management td.to li.new select').append($('<option value="' + input.val() + '">' + input.val() + ' ' + window.domain + '</option>'))
+            input.replaceWith( $('<span class="name">' + input.val() + '</span>') )
           else
             alert('An alias with that name already exists')
         else
@@ -130,7 +132,22 @@ $(document).ready ->
 
 
   $('#saveall button').click ->
-    window.alert('unimplemented')
+    $(this).attr('disabled', 'disabled');
+    $(this).text('Saving...')
+
+    $.ajax
+      type: 'POST'
+      url: '/aliases.json'
+      data : JSON.stringify(window.aliases)
+      contentType : 'application/json'
+
+      success: (data) ->
+        # if data == error
+        alert('Data saved')
+        window.location.reload(false)
+
+      error: (xhr, ajaxOptions, thrownError) ->
+        window.alert('Something went wrong when saving alias information. Error: ' + thrownError);
 
 
   $.ajax
@@ -144,4 +161,4 @@ $(document).ready ->
       $('.add, .remove, .save').removeAttr('style')
 
     error: (xhr, ajaxOptions, thrownError) ->
-      window.alert('Something went wrong when retrieving more alias information. Error: ' + thrownError);
+      alert('Something went wrong when retrieving more alias information. Error: ' + thrownError);

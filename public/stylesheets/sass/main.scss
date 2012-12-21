@@ -59,6 +59,10 @@ body {
       font-style: italic;
     }
   }
+
+  thead {
+    font-weight: bold;
+  }
 }
 
 .add, .remove, .save {
